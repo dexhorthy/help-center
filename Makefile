@@ -38,3 +38,28 @@ setup:
 	mkdir -p java
 	curl -o java/swagger2markup-cli-1.3.1.jar http://central.maven.org/maven2/io/github/swagger2markup/swagger2markup-cli/1.3.1/swagger2markup-cli-1.3.1.jar
 	curl -o java/swagger2markup-1.3.1.jar http://central.maven.org/maven2/io/github/swagger2markup/swagger2markup/1.3.1/swagger2markup-1.3.1.jar
+
+linkcheck:
+	npm install --global broken-link-checker@0.7.8
+	time blc http://help.replicated.com -r \
+		--host-requests 20 \
+		--requests 20 \
+		\
+		--exclude 'server:8800' \
+		--exclude '10.128.0.4' \
+		--exclude 'get.company.com/docker' \
+		\
+		--exclude 'golang.org' \
+		--exclude 'circleci.com' \
+		--exclude 'registry.replicated.com' \
+		--exclude 'registry-data.replicated.com' \
+		--exclude 'api.replicated.com' \
+		--exclude 'get.replicated.com' \
+		\
+		--exclude 'help.replicated.com/community' \
+		--exclude 'help.replicated.com/tos'  \
+		--exlcude 'help.replicated.com/faq' \
+		--exclude 'help.replicated.com/privacy' \
+		--exclude 'help.replicated.com/guidelines' \
+		\
+		--color=always  | grep -E 'Getting|Finished|BROKEN|^$$'
